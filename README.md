@@ -1,7 +1,12 @@
-Esqlite ![Test](https://github.com/mmzeeman/esqlite/workflows/Test/badge.svg)
+Esqlite
 =======
 
 An Erlang nif library for sqlite3.
+
+Diode Fork
+----------
+
+This is a fork of v0.4.2 of the original esqlite library. We keep it nif interface compatible with this version.
 
 Introduction
 ------------

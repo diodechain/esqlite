@@ -5,6 +5,7 @@ ERL       ?= erl
 REBAR3 := $(shell which rebar3 2>/dev/null || echo ./rebar3)
 REBAR3_VERSION := 3.14.1
 REBAR3_URL := https://github.com/erlang/rebar3/releases/download/$(REBAR3_VERSION)/rebar3
+CFLAGS += -DNDEBUG=1 -Os
 
 ifeq (,$(STATIC_ERLANG_NIF))
 all: compile
@@ -17,6 +18,8 @@ OBJS = c_src/esqlite3_nif.c c_src/queue.c c_src/sqlite3/sqlite3.c
 RANLIB ?= ranlib
 ARFLAGS ?= rc
 endif
+
+export CFLAGS
 
 priv/esqlite3_nif.a: $(OBJS:.c=.o)
 	mkdir -p $(dir $@)

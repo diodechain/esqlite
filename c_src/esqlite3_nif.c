@@ -667,10 +667,18 @@ do_column_types(ErlNifEnv *env, sqlite3_stmt *stmt)
     for(i = 0; i < size; i++) {
         type = sqlite3_column_decltype(stmt, i);
         if(type == NULL) {
-	    type = "nil";
-        }
+            array[i] = make_atom(env, "nil");
+        }else{
+            char type_buffer[32] = {0};
+            strncpy(type_buffer, type, 32);
+            for(int j = 0; j < strlen(type_buffer); j++) {
+                if(type_buffer[j] >= 'A' && type_buffer[j] <= 'Z') {
+                    type_buffer[j] = type_buffer[j] + 32; // convert to lowercase
+                }
+            }
 
-        array[i] = make_atom(env, type);
+            array[i] = make_atom(env, type_buffer);
+        }
     }
 
     column_types = enif_make_tuple_from_array(env, array, size);
